@@ -5,21 +5,22 @@
 //
 //  Self-contained: copy this file into your target, or use it through the Swift package.
 //
-//  Works by using private Apple API's to trigger the underlying fetch, populating the daemon
-//  cache. It creates an overlay whose window it hides (alpha = 0, isUserInteractionEnabled 
-//  = False) and then tears it down, remaining invisible to the end user.
-//  
+//  Works by triggering a fetch which populates the overlay cache. It uses private Apple 
+//  APIs to get the overlay window, and hides it (isUserInteractionEnabled = false, 
+//  alpha = 0) and tears it down after, remaining invisible to the end user while getting the
+//  data into the cache.
+//
 //  This stops the user from absorbing the startup cost of AppStoreOverlaysService (~150ms) 
 //  and appstorecomponentsd (a daemon the service starts only when it receives a presentation)
-//  along with its App Store lookup, leading to instant UI presentation.
+//  along with its App Store lookup, leading to immediate UI presentation.
 //
 //  The service and daemon shut down when your app goes to the background, so prefetch again
 //  when the scene becomes active.
 //
 //  Uses PRIVATE API: `-[UIWindowScene _aso_appOverlayManager]` and the manager's `window`.
 //  Both are guarded with responds(to:); if Apple changes them, prefetch fails with
-//  `.unavailable` and plain SKOverlay keeps working. Not App Store safe, and works in iOS 14+
-//  but may break with future iOS versions.
+//  `.unavailable` and plain SKOverlay keeps working. Works in iOS 14+ but may break with
+//  future iOS versions. Not App Store safe.
 //
 
 import UIKit

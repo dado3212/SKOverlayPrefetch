@@ -1,71 +1,47 @@
 # SKOverlayPrefetch
 
-Proof of concept for making `SKOverlay` appear quickly by loading its pieces ahead of time.
+Prefetch `SKOverlay` so `present(in:)` shows without the load delay (1–5 s when cold).
 
-A cold `SKOverlay.present(in:)` can take one to five seconds. Almost none of that is in your app:
+## Why it's slow
 
-1. **View service** – your app launches `AppStoreOverlaysService` (an extension) to host the overlay. About 150 ms.
-2. **Daemon + data** – the service starts `appstorecomponentsd` only when it receives a presentation. The daemon boots (~0.4 s) and fetches the app's App Store "lockup". The service caches the result in memory.
-3. **Presentation** – once the lockup is loaded, the overlay animates in.
+A cold present waits on:
 
-If the daemon was started less than 10 seconds earlier (for example, you closed and reopened the app), launchd's default `ThrottleInterval` holds the new daemon back for the rest of those 10 seconds. The daemon exits as soon as its last client disconnects, so a quick relaunch hits this every time.
+1. **`AppStoreOverlaysService`** – the extension hosting the overlay (~150 ms to launch).
+2. **`appstorecomponentsd`** – a daemon the service starts only on a presentation (~0.4 s to boot). It fetches the App Store lookup, which the service caches in memory.
+3. **launchd** – if the daemon last started under 10 s ago (e.g. a quick relaunch), its default `ThrottleInterval` delays it for the rest of those 10 s.
 
-## Layout
+## How it works
 
-```
-SKOverlayPrefetch/
-├── SKOverlayPrefetch/
-│   └── SKOverlayPrefetch.swift   ← the whole library
-├── Demo/                         ← proof-of-concept app
-├── Package.swift
-└── README.md
-```
+Presents a real overlay with its window hidden (alpha 0, no touches), dismisses it after `storeOverlayDidFinishPresentation`, then restores the window. Private API is only used to find that window. Dismissing earlier cancels the load (`SKErrorDomain` 15).
 
-## Installation
+## Install
 
-Either:
-
-- **Copy the file:** drag `SKOverlayPrefetch/SKOverlayPrefetch.swift` into your app target. It only uses UIKit and StoreKit, so there's nothing else to add, and no `import` is needed.
-- **Swift Package Manager:** add this repository as a package dependency and `import SKOverlayPrefetch`.
-
-Requires iOS 14+ (the same as `SKOverlay`). The demo app targets iOS 17.
+Copy `SKOverlayPrefetch/SKOverlayPrefetch.swift` into your target, or add this repo with Swift Package Manager and `import SKOverlayPrefetch`. iOS 14+.
 
 ## Usage
 
 ```swift
-import SKOverlayPrefetch   // only when using the package
-
 // When the scene becomes active (the service and daemon shut down in the background):
-SKOverlayPrefetch.prefetch(appIdentifier: "361309726", in: windowScene) { failure in
+SKOverlayPrefetch.prefetch(appIdentifier: "361309726", in: scene) { failure in
     // nil on success
 }
 
 // Later, as usual:
-overlay.present(in: windowScene)
+overlay.present(in: scene)
 ```
 
-| API | What it does |
-|---|---|
-| `prefetch(appIdentifier:in:completion:)` | Hidden present + dismiss: launches the service, starts the daemon, loads the lockup, leaves it in the service's cache. One at a time; a second call while one is running fails with `.busy`. |
-| `isPrefetching` | True while a prefetch is running. |
-| `present(_:in:)` | Likely not necessary. `SKOverlay.present(in:)`, deferred if a prefetch is still running so it doesn't go into the hidden window. |
-
-`completion` gets `nil` on success, or a `Failure` for debugging: `.unavailable` (private API missing), `.busy`, `.timedOut`, or `.overlayFailed` with SKOverlay's error (e.g. `SKErrorDomain 20` if the scene isn't in the foreground).
-
-## How the hidden prefetch works
-
-- The overlay's window (owned by AppStoreOverlays' per-scene `ASOOverlayManager`) is only unhidden once the lockup has loaded. The prefetch sets that window to alpha 0 with touches off, presents, and dismisses from `storeOverlayDidFinishPresentation`.
-- Dismissing any earlier reaches the service while the lockup is still loading and cancels the present (`SKErrorDomain` 15).
-- Prefetch configurations carry no campaign or provider tokens.
+- One prefetch at a time; `isPrefetching` is true while one runs.
+- `present(_:in:)` waits for a running prefetch to finish. Likely unnecessary.
+- `Failure`: `.unavailable` (private API missing), `.busy`, `.timedOut`, `.overlayFailed` (SKOverlay's error, e.g. `SKErrorDomain 20` when the scene isn't in the foreground).
 
 ## Caveats
 
-- Uses private API (`-[UIWindowScene _aso_appOverlayManager]` and the manager's `window`). Both are guarded with `responds(to:)`; if they change, the prefetch fails with `.unavailable` and normal `SKOverlay` behaviour is unaffected. Not App Store safe.
-- Doesn't check for an overlay already on screen: a prefetch while one is showing will dismiss it. Prefetch when the scene becomes active, before you present anything.
-- Backgrounding the app shuts down the service and daemon and drops the cache. Prefetch again on each foreground.
-- The service rate-limits presentations (`requestsPerSecond=1 timeWindow=5`, server-set). A real present immediately after a prefetch may be affected.
-- Based on iOS 17.4 Simulator binaries and iOS 18.7 device logs.
+- Private API (`-[UIWindowScene _aso_appOverlayManager]`, the manager's `window`), guarded with `responds(to:)`. If missing, prefetch fails and SKOverlay is unaffected. Not App Store safe; may break in future iOS versions.
+- A prefetch dismisses any overlay already on screen.
+- Backgrounding drops the cache. Prefetch on each foreground.
+- The service rate-limits presentations (1 per second over 5 s, server-set).
+- Checked against iOS 14.5, 15.5 and 17.4 binaries and iOS 18.7 on device.
 
 ## Demo
 
-`Demo/SKOverlayPrefetchDemo.xcodeproj` is a small app with Prefetch, Present and Dismiss buttons and a log of timings (present → `storeOverlayWillStartPresentation`). Set your own signing team to run it on a device.
+`Demo/SKOverlayPrefetchDemo.xcodeproj` (iOS 14+): Prefetch, Present and Dismiss buttons with timings. Set your signing team to run on a device.
