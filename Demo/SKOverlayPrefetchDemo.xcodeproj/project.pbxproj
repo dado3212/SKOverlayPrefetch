@@ -1,0 +1,276 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7C8879E2C832328A59CD3AB9 /* SKOverlayPrefetch in Frameworks */ = {isa = PBXBuildFile; productRef = 857F73B870903CF4F5FC4622 /* SKOverlayPrefetch */; };
+		93BEA1EE3FE8ECC75EE178FA /* SKOverlayPrefetchDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49455417151C8268CA4B478 /* SKOverlayPrefetchDemoApp.swift */; };
+		68F47552822D00EFDBE43D49 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4071299B63FDE19DA2BA24 /* ContentView.swift */; };
+		743FB6742AE1A50038432305 /* PrefetchDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AE5AA117EB5471788470A0 /* PrefetchDemo.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7CEC282903680D53B887BCE4 /* SKOverlayPrefetchDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKOverlayPrefetchDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D49455417151C8268CA4B478 /* SKOverlayPrefetchDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKOverlayPrefetchDemoApp.swift; sourceTree = "<group>"; };
+		5B4071299B63FDE19DA2BA24 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A3AE5AA117EB5471788470A0 /* PrefetchDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefetchDemo.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D45EE0359F636CC012915F3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C8879E2C832328A59CD3AB9 /* SKOverlayPrefetch in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BBB78A372F5BFE96A6200790 = {
+			isa = PBXGroup;
+			children = (
+				A6568239C1DAD020C7915E6A /* SKOverlayPrefetchDemo */,
+				29588F16556E77E6E228DB0D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		29588F16556E77E6E228DB0D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7CEC282903680D53B887BCE4 /* SKOverlayPrefetchDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A6568239C1DAD020C7915E6A /* SKOverlayPrefetchDemo */ = {
+			isa = PBXGroup;
+			children = (
+				D49455417151C8268CA4B478 /* SKOverlayPrefetchDemoApp.swift */,
+				5B4071299B63FDE19DA2BA24 /* ContentView.swift */,
+				A3AE5AA117EB5471788470A0 /* PrefetchDemo.swift */,
+			);
+			name = SKOverlayPrefetchDemo;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6987250E0FB301631EC135DB /* SKOverlayPrefetchDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 96C2BE07DCC59AA3D8C4CF79 /* Build configuration list for PBXNativeTarget "SKOverlayPrefetchDemo" */;
+			buildPhases = (
+				DC1767D2C4C443C9D98C1505 /* Sources */,
+				D45EE0359F636CC012915F3E /* Frameworks */,
+				DFC1FC4CB0C4DD581B40A7E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SKOverlayPrefetchDemo;
+			packageProductDependencies = (
+				857F73B870903CF4F5FC4622 /* SKOverlayPrefetch */,
+			);
+			productName = SKOverlayPrefetchDemo;
+			productReference = 7CEC282903680D53B887BCE4 /* SKOverlayPrefetchDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9F00683495AC5E7B73B02763 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					6987250E0FB301631EC135DB = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = B54BF62A4AAD94EA8DC95A29 /* Build configuration list for PBXProject "SKOverlayPrefetchDemo" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BBB78A372F5BFE96A6200790;
+			packageReferences = (
+				99810C4E72107F46F76C2C20 /* XCLocalSwiftPackageReference ".." */,
+			);
+			productRefGroup = 29588F16556E77E6E228DB0D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6987250E0FB301631EC135DB /* SKOverlayPrefetchDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DFC1FC4CB0C4DD581B40A7E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DC1767D2C4C443C9D98C1505 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93BEA1EE3FE8ECC75EE178FA /* SKOverlayPrefetchDemoApp.swift in Sources */,
+				68F47552822D00EFDBE43D49 /* ContentView.swift in Sources */,
+				743FB6742AE1A50038432305 /* PrefetchDemo.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AE1DDE6D51CB7740DDF40569 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = iphoneos;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EC093DE6CF82AA2D9AF4F7C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = iphoneos;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CA7B428D8145590427544CFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K2WR3HLA57;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Prefetch Demo";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hackingdartmouth.SKOverlayPrefetchDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		957A36C66CD36377C2FEFF6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K2WR3HLA57;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Prefetch Demo";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hackingdartmouth.SKOverlayPrefetchDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B54BF62A4AAD94EA8DC95A29 /* Build configuration list for PBXProject "SKOverlayPrefetchDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE1DDE6D51CB7740DDF40569 /* Debug */,
+				EC093DE6CF82AA2D9AF4F7C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		96C2BE07DCC59AA3D8C4CF79 /* Build configuration list for PBXNativeTarget "SKOverlayPrefetchDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA7B428D8145590427544CFD /* Debug */,
+				957A36C66CD36377C2FEFF6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		99810C4E72107F46F76C2C20 /* XCLocalSwiftPackageReference ".." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		857F73B870903CF4F5FC4622 /* SKOverlayPrefetch */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SKOverlayPrefetch;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 9F00683495AC5E7B73B02763 /* Project object */;
+}
