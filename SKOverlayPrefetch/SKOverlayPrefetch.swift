@@ -1,22 +1,25 @@
 //
 //  SKOverlayPrefetch.swift
 //
-//  Proof of concept: make SKOverlay.present(in:) appear quickly by doing a hidden present
-//  and dismiss ahead of time.
+//  Allows you to prefetch SKOverlay.present(in:) so that you can trigger it without delay.
 //
 //  Self-contained: copy this file into your target, or use it through the Swift package.
 //
-//  A cold present waits on AppStoreOverlaysService (an extension your app launches) and
-//  appstorecomponentsd (a daemon the service starts only when it receives a presentation),
-//  which fetches the app's App Store lockup. The service caches that lockup in memory, so a
-//  later present for the same app ID only pays for the animation.
+//  Works by using private Apple API's to trigger the underlying fetch, populating the daemon
+//  cache. It creates an overlay whose window it hides (alpha = 0, isUserInteractionEnabled 
+//  = False) and then tears it down, remaining invisible to the end user.
+//  
+//  This stops the user from absorbing the startup cost of AppStoreOverlaysService (~150ms) 
+//  and appstorecomponentsd (a daemon the service starts only when it receives a presentation)
+//  along with its App Store lookup, leading to instant UI presentation.
 //
 //  The service and daemon shut down when your app goes to the background, so prefetch again
 //  when the scene becomes active.
 //
 //  Uses PRIVATE API: `-[UIWindowScene _aso_appOverlayManager]` and the manager's `window`.
 //  Both are guarded with responds(to:); if Apple changes them, prefetch fails with
-//  `.unavailable` and plain SKOverlay keeps working. Not App Store safe.
+//  `.unavailable` and plain SKOverlay keeps working. Not App Store safe, and works in iOS 14+
+//  but may break with future iOS versions.
 //
 
 import UIKit
