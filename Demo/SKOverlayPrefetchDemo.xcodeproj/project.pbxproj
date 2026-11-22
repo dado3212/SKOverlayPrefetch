@@ -11,6 +11,7 @@
 		93BEA1EE3FE8ECC75EE178FA /* SKOverlayPrefetchDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49455417151C8268CA4B478 /* SKOverlayPrefetchDemoApp.swift */; };
 		68F47552822D00EFDBE43D49 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4071299B63FDE19DA2BA24 /* ContentView.swift */; };
 		743FB6742AE1A50038432305 /* PrefetchDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AE5AA117EB5471788470A0 /* PrefetchDemo.swift */; };
+		D2584DA4E58F8E70E85BBDB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E98332E3D8F882A293B3971 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +19,7 @@
 		D49455417151C8268CA4B478 /* SKOverlayPrefetchDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKOverlayPrefetchDemoApp.swift; sourceTree = "<group>"; };
 		5B4071299B63FDE19DA2BA24 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A3AE5AA117EB5471788470A0 /* PrefetchDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefetchDemo.swift; sourceTree = "<group>"; };
+		5E98332E3D8F882A293B3971 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 				D49455417151C8268CA4B478 /* SKOverlayPrefetchDemoApp.swift */,
 				5B4071299B63FDE19DA2BA24 /* ContentView.swift */,
 				A3AE5AA117EB5471788470A0 /* PrefetchDemo.swift */,
+				5E98332E3D8F882A293B3971 /* Assets.xcassets */,
 			);
 			name = SKOverlayPrefetchDemo;
 			sourceTree = "<group>";
@@ -122,6 +125,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2584DA4E58F8E70E85BBDB4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +190,7 @@
 		CA7B428D8145590427544CFD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K2WR3HLA57;
@@ -212,6 +217,7 @@
 		957A36C66CD36377C2FEFF6B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K2WR3HLA57;

@@ -1,4 +1,4 @@
-# SKOverlayPrefetch
+# <img src="/Demo/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png?raw=true" height="32px" alt=""/> SKOverlayPrefetch
 
 Prefetch `SKOverlay` so `present(in:)` shows without the load delay (1–5 s when cold).
 
