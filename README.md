@@ -8,8 +8,8 @@ Prefetch `SKOverlay` so `present(in:)` shows up near-instantly instead of after 
     <th>Prefetched</th>
   </tr>
   <tr>
-    <td><img src="Media/normal.gif" width="250" alt="Presenting normally: 8,688 ms before the overlay appears"/></td>
-    <td><img src="Media/prefetch.gif" width="250" alt="Presenting after a prefetch: 25 ms before the overlay appears"/></td>
+    <td>https://github.com/user-attachments/assets/c3d14720-930f-47cb-be8f-7c50396ba4c6</td>
+    <td>https://github.com/user-attachments/assets/b705d9d7-f335-4b58-8eb6-45b23163e194</td>
   </tr>
   <tr>
     <td align="center">8,688 ms</td>
