@@ -1,18 +1,46 @@
 # <img src="/Demo/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png?raw=true" height="32px" alt=""/> SKOverlayPrefetch
 
-Prefetch `SKOverlay` so `present(in:)` shows without the load delay (1–5 s when cold).
+Prefetch `SKOverlay` so `present(in:)` shows up near-instantly instead of after a multi-second network load.
 
-## Why it's slow
+<table>
+  <tr>
+    <th>Normal</th>
+    <th>Prefetched</th>
+  </tr>
+  <tr>
+    <td><img src="Media/normal.gif" width="250" alt="Presenting normally: 8,688 ms before the overlay appears"/></td>
+    <td><img src="Media/prefetch.gif" width="250" alt="Presenting after a prefetch: 25 ms before the overlay appears"/></td>
+  </tr>
+  <tr>
+    <td align="center">8,688 ms</td>
+    <td align="center">25 ms</td>
+  </tr>
+</table>
 
-A cold present waits on:
+Full write-up: [Speeding up SKOverlay with private APIs](https://blog.alexbeals.com/posts/speeding-up-skoverlay-with-private-apis).
 
-1. **`AppStoreOverlaysService`** – the extension hosting the overlay (~150 ms to launch).
-2. **`appstorecomponentsd`** – a daemon the service starts only on a presentation (~0.4 s to boot). It fetches the App Store lookup, which the service caches in memory.
-3. **launchd** – if the daemon last started under 10 s ago (e.g. a quick relaunch), its default `ThrottleInterval` delays it for the rest of those 10 s.
+## The problem
+
+```swift
+guard let scene = view.window?.windowScene else { return }
+
+let config = SKOverlay.AppConfiguration(
+    appIdentifier: "329218549",
+    position: .bottom
+)
+let overlay = SKOverlay(configuration: config)
+overlay.present(in: scene)
+```
+
+`SKOverlay` has to do a network request to turn the numerical ID like `329218549` into what shows up. That all happens in a network request after `present(in:)`, which can mean multiple-second delays between presenting the overlay and it actually showing up.
 
 ## How it works
 
-Presents a real overlay with its window hidden (alpha 0, no touches), dismisses it after `storeOverlayDidFinishPresentation`, then restores the window. Private API is only used to find that window. Dismissing earlier cancels the load (`SKErrorDomain` 15).
+`present(in:)` is `-[SKOverlay presentInScene:]`, which calls `[[scene _aso_appOverlayManager] presentOverlay:self]`. That launches `AppStoreOverlaysService`, an extension that hosts the overlay. The service asks a launchd daemon, `appstorecomponentsd`, for the app's info, and caches the result in memory.
+
+Callers to the daemon are locked down, but the service caches the result, so if it has fetched once, the next present is nearly instant.
+
+We can 'prefetch' by presenting once, invisibly: `_aso_appOverlayManager` (private) gives us the overlay's window, which we set to `alpha = 0` so the user can't see it and `isUserInteractionEnabled = false` so they can't touch it. Once it finishes presenting (`storeOverlayDidFinishPresentation`) we dismiss it and restore the window. The real present then hits the cache, happening immediately.
 
 ## Install
 
@@ -21,7 +49,7 @@ Copy `SKOverlayPrefetch/SKOverlayPrefetch.swift` into your target, or add this r
 ## Usage
 
 ```swift
-// When the scene becomes active (the service and daemon shut down in the background):
+// When the scene becomes active (the cache is dropped in the background):
 SKOverlayPrefetch.prefetch(appIdentifier: "361309726", in: scene) { failure in
     // nil on success
 }
@@ -36,11 +64,13 @@ overlay.present(in: scene)
 
 ## Caveats
 
-- Private API (`-[UIWindowScene _aso_appOverlayManager]`, the manager's `window`), guarded with `responds(to:)`. If missing, prefetch fails and SKOverlay is unaffected. Not App Store safe; may break in future iOS versions.
+- **This isn't allowed by Apple.** App Store Review Guideline 2.5.1: "Apps may only use public APIs and must run on the currently shipping OS." The private API (`-[UIWindowScene _aso_appOverlayManager]` and the manager's `window`) is guarded with `responds(to:)`, so if it disappears the prefetch fails and `SKOverlay` works as normal. I haven't submitted an app using this.
+- **The cache only lives while the app is visible.** Backgrounding shuts the service down and the prefetch is thrown away, so prefetch on each foreground.
+- **The service rate-limits presents:** up to 5 at once, then 1 per second. A prefetch counts as one. Going over fails immediately (`SKErrorDomain` 0).
+- **The icon may still be loading.** The prefetch finishes once the name, subtitle and price come back; the icon can take longer. Present too soon after prefetching and you'll briefly see a placeholder (visible in the prefetched video above).
+- **Quick relaunches are slow.** launchd waits 10 s between launches of the daemon, so presenting, closing the app and reopening it can add up to ~10 s.
 - A prefetch dismisses any overlay already on screen.
-- Backgrounding drops the cache. Prefetch on each foreground.
-- The service rate-limits presentations (1 per second over 5 s, server-set).
-- Checked against iOS 14.5, 15.5 and 17.4 binaries and iOS 18.7 on device.
+- Checked against iOS 14.5, 15.5 and 17.4 binaries and iOS 18.7 on device. May break in future iOS versions.
 
 ## Demo
 
